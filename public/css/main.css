@@ -56,6 +56,11 @@ body {
             }
         }
     }
+
+    .img_404 {
+        width: 300px;
+        display: block;
+    }
 }
 
 #about_main {
@@ -102,3 +107,4 @@ body {
         }
     }
 }
+
