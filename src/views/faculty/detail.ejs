@@ -1,0 +1,22 @@
+<%- include('../partials/header.ejs') %>
+
+    <main id="faculty_detail_main">
+        <!-- <h2><%= title %></h2> -->
+
+        <section class="faculty-detail">
+            <% if (faculty) { %>
+                <h3><%= faculty.name %> - <%= faculty.title %></h3>
+                <p>Department: <%= faculty.department %></p>
+                <p>Email: <a href="mailto:<%= faculty.email %>"><%= faculty.email %></a></p>
+                <p>Office: <%= faculty.office %></p>
+                <p>Phone: <%= faculty.phone %></p>
+            <% } else { %>
+                <p>Faculty member not found.</p>
+            <% } %>
+        </section>
+        <div class="navigation">
+            <p><a href="/faculty">&larr; Back to Faculty Directory</a></p>
+        </div>
+    </main>
+
+<%- include('../partials/footer.ejs') %>
