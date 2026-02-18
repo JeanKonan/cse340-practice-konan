@@ -8,6 +8,7 @@ import { addDemoHeaders } from '../middleware/demo/headers.js';
 import { homePage, aboutPage, demoPage, testErrorPage } from '../controllers/index.js';
 import { catalogPage, courseDetailPage } from '../controllers/catalog/catalog.js';
 import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
+import contactRoutes from './forms/contact.js';
 
 // Add catalog-specific styles to all catalog routes
 router.use('/catalog', (req, res, next) => {
@@ -20,6 +21,15 @@ router.use('/faculty', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/faculty.css">');
     next();
 });
+
+// Add contact-specific styles to all contact routes
+router.use('/contact', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
+    next();
+});
+
+// Contact form routes
+router.use('/contact', contactRoutes);
 
 // TODO: Add route definitions
 // Home and basic pages
