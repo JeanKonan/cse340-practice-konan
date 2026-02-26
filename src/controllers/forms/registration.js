@@ -39,6 +39,9 @@ const registrationValidation = [
 const showRegistrationForm = (req, res) => {
     // TODO: Render the registration form view (forms/registration/form)
     // TODO: Pass title: 'User Registration' in the data object
+    res.render('forms/registration/form', {
+        title: 'User Registration'
+    });
 };
 
 /**
@@ -50,36 +53,51 @@ const processRegistration = async (req, res) => {
 
     if (!errors.isEmpty()) {
         // TODO: Log validation errors to console for debugging
+        console.error('Validation errors:', errors.array());
+        // TODO: Store each validation error as a separate flash message
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
         // TODO: Redirect back to /register
-        return;
+        return res.redirect('/register');
     }
 
     // Extract validated data from request body
     // TODO: Destructure name, email, password from req.body
+    const { name, email, password } = req.body;
 
     try {
         // Check if email already exists in database
         // TODO: Call emailExists(email) and store the result in a variable
+        const emailAlreadyExists = await emailExists(email);
 
-        if (/* TODO: check if email exists */) {
+        if (emailAlreadyExists) {
             // TODO: Log message: 'Email already registered'
+            req.flash('warning', 'Email already registered');
             // TODO: Redirect back to /register
-            return;
+            return res.redirect('/register');
         }
 
         // Hash the password before saving to database
         // TODO: Use bcrypt.hash(password, 10) to hash the password
         // TODO: Store the result in a variable called hashedPassword
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // Save user to database with hashed password
         // TODO: Call saveUser(name, email, hashedPassword)
+        await saveUser(name, email, hashedPassword);
 
         // TODO: Log success message to console
+        req.flash('success', 'Registration successful! You can now log in.');
         // TODO: Redirect to /register/list to show successful registration
         // NOTE: Later when we add authentication, we'll change this to require login first
+        res.redirect('/login');
     } catch (error) {
         // TODO: Log the error to console
+        console.error('Error during registration:', error);
+        req.flash('error', 'An error occurred during registration. Please try again.');
         // TODO: Redirect back to /register
+        res.redirect('/register');
     }
 };
 
@@ -92,11 +110,34 @@ const showAllUsers = async (req, res) => {
 
     try {
         // TODO: Call getAllUsers() and assign to users variable
+        users = await getAllUsers();
     } catch (error) {
         // TODO: Log the error to console
+        console.error('Error retrieving users:', error);
         // users remains empty array on error
     }
 
     // TODO: Render the users list view (forms/registration/list)
     // TODO: Pass title: 'Registered Users' and the users variable in the data object
+    res.render('forms/registration/list', {
+        title: 'Registered Users',
+        users
+    });
 };
+
+/**
+ * GET /register - Display the registration form
+ */
+router.get('/', showRegistrationForm);
+
+/**
+ * POST /register - Handle registration form submission with validation
+ */
+router.post('/', registrationValidation, processRegistration);
+
+/**
+ * GET /register/list - Display all registered users
+ */
+router.get('/list', showAllUsers);
+
+export default router;

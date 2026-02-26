@@ -9,6 +9,10 @@ import { homePage, aboutPage, demoPage, testErrorPage } from '../controllers/ind
 import { catalogPage, courseDetailPage } from '../controllers/catalog/catalog.js';
 import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 import contactRoutes from './forms/contact.js';
+import registrationRoutes from './forms/registration.js';
+import loginRoutes from './forms/login.js';
+import { processLogout, showDashboard } from './forms/login.js';
+import { requireLogin } from '../middleware/auth.js';
 
 // Add catalog-specific styles to all catalog routes
 router.use('/catalog', (req, res, next) => {
@@ -34,8 +38,25 @@ router.use('/register', (req, res, next) => {
     next();
 });
 
+// Add login-specific styles to all login routes
+router.use('/login', (req, res, next) => {
+    res.addStyle('<link rel="stylesheet" href="/css/login.css">');
+    next();
+});
+
 // Contact form routes
 router.use('/contact', contactRoutes);
+
+// Registration form routes
+router.use('/register', registrationRoutes);
+// Login form routes
+router.use('/login', loginRoutes);
+
+// Logout route
+router.get('/logout', processLogout);
+
+// Dashboard route (requires login)
+router.get('/dashboard', requireLogin, showDashboard);
 
 // TODO: Add route definitions
 // Home and basic pages
