@@ -36,21 +36,19 @@
                 <li><a href="/demo" <% if (title.toLowerCase() == 'middleware demo page') {%> class="active" <% }%>>Demo</a></li>
                 <li><a href="/faculty" <% if (title.toLowerCase() == 'faculty directory') {%> class="active" <% }%>>Faculty</a></li>
                 <li><a href="/contact" <% if (title.toLowerCase() == 'contact us') {%> class="active" <% }%>>Contact</a></li>
-                <li><a href="/contact/responses" <% if (title.toLowerCase() == 'contact form submissions') {%> class="active" <% }%>>Contact Responses</a></li>
-                <li><a href="/register" <% if (title.toLowerCase() == 'user registration') {%> class="active" <% }%>>Register</a></li>
                 <li><a href="/register/list" <% if (title.toLowerCase() == 'registered users') {%> class="active" <% }%>>Users</a></li>
 
                  <!-- Only visible when logged in -->
                 <% if (isLoggedIn) { %>
-                    <li><a href="/dashboard">Dashboard</a></li>
-                    <li><a href="/register/list">All Users</a></li>
-                    <li><a href="/contact/responses">Contact Responses</a></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/dashboard" <% if (title.toLowerCase() == 'dashboard') {%> class="active" <% }%>>Dashboard</a></li>
+                    <li><a href="/register/list" <% if (title.toLowerCase() == 'registered users') {%> class="active" <% }%>>All Users</a></li>
+                    <li><a href="/contact/responses" <% if (title.toLowerCase() == 'contact form submissions') {%> class="active" <% }%>>Contact Responses</a></li>
+                    <li><a href="/logout" <% if (title.toLowerCase() == 'logout') {%> class="active" <% }%>>Logout</a></li>
                 <% } %>
                 <!-- Only visible when NOT logged in -->
                 <% if (!isLoggedIn) { %>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">Register</a></li>
+                    <li><a href="/login" <% if (title.toLowerCase() == 'user login') {%> class="active" <% }%>>Login</a></li>
+                    <li><a href="/register" <% if (title.toLowerCase() == 'user registration') {%> class="active" <% }%>>Register</a></li>
                 <% } %>
             </ul>
         </nav>

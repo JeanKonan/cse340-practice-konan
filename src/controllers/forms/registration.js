@@ -75,7 +75,7 @@ const processRegistration = async (req, res) => {
             // TODO: Log message: 'Email already registered'
             req.flash('warning', 'Email already registered');
             // TODO: Redirect back to /register
-            return res.redirect('/register');
+            return res.redirect('/login');
         }
 
         // Hash the password before saving to database

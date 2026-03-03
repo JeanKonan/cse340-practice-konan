@@ -38,6 +38,11 @@ const processLogin = async (req, res) => {
     if (!errors.isEmpty()) {
         // TODO: Log validation errors to console
         console.log('Validation errors:', errors.array());
+        
+        // TODO: Store each validation error as a separate flash message
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
         // TODO: Redirect back to /login
         return res.redirect('/login');
     }
@@ -50,14 +55,14 @@ const processLogin = async (req, res) => {
         // TODO: If not found, log "User not found" and redirect to /login
         const user = await findUserByEmail(email);
         if (!user) {
-            console.log("User not found");
+            req.flash('error', 'Invalid email or password');
             return res.redirect('/login');
         }
         // TODO: Verify password using verifyPassword(password, user.password)
         // TODO: If password incorrect, log "Invalid password" and redirect to /login
         const isPasswordValid = await verifyPassword(password, user.password);
         if (!isPasswordValid) {
-            console.log("Invalid password");
+            req.flash('error', 'Invalid email or password');
             return res.redirect('/login');
         }
 
@@ -66,12 +71,13 @@ const processLogin = async (req, res) => {
 
         // TODO: Store user in session: req.session.user = user
         req.session.user = user;
+        req.flash('success', 'Login successful');
         // TODO: Redirect to /dashboard
         return res.redirect('/dashboard');
     } catch (error) {
         // Model functions do not catch errors, so handle them here
         // TODO: Log error to console
-        console.error('Error processing login:', error);
+        req.flash('error', 'An error occurred during login. Please try again.');
         // TODO: Redirect to /login
         return res.redirect('/login');
     }
