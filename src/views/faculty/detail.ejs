@@ -5,11 +5,14 @@
 
         <section class="faculty-detail">
             <% if (Object.keys(faculty).length > 0) { %>
-                <h3><%= faculty.name %> - <%= faculty.title %></h3>
-                <p>Department: <%= faculty.department %></p>
-                <p>Email: <a href="mailto:<%= faculty.email %>"><%= faculty.email %></a></p>
-                <p>Office: <%= faculty.office %></p>
-                <p>Phone: <%= faculty.phone %></p>
+                <img src="/images/faculty/<%= faculty.slug %>.jpg" alt="Photo of <%= faculty.name %>" class="faculty-detail-photo">
+                <div>
+                    <h3><%= faculty.name %> - <%= faculty.title %></h3>
+                    <p>Department: <%= faculty.department %></p>
+                    <p>Email: <a href="mailto:<%= faculty.email %>"><%= faculty.email %></a></p>
+                    <p>Office: <%= faculty.office %></p>
+                    <p>Phone: <%= faculty.phone %></p>
+                </div>
             <% } else { %>
                 <p>Faculty member not found.</p>
             <% } %>

@@ -10,6 +10,11 @@
         padding: 1.5rem;
         background: #fff;
         transition: box-shadow 0.2s ease;
+        position: inherit;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
 
         &:hover {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -36,9 +41,32 @@
     border-radius: 8px;
     padding: 1.5rem;
     background: #fff;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    align-items: center;
 
     h3 {
         margin: 0 0 0.5rem 0;
         color: #2c5aa0;
     }
+}
+
+.faculty-photo {
+    width: 20%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 7px;
+    border-radius: 10px;
+    background: url('https://placehold.co/480') center / cover no-repeat;
+}
+
+.faculty-detail-photo {
+    width: 200px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    background: url('https://placehold.co/480') center / cover no-repeat;
 }
