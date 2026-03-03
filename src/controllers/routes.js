@@ -13,6 +13,11 @@ import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
 import { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
+import { 
+    contactValidation,
+    registrationValidation,
+    loginValidation
+ } from '../middleware/validation/forms.js';
 
 // Add catalog-specific styles to all catalog routes
 router.use('/catalog', (req, res, next) => {
@@ -45,12 +50,12 @@ router.use('/login', (req, res, next) => {
 });
 
 // Contact form routes
-router.use('/contact', contactRoutes);
+router.use('/contact', contactValidation,  contactRoutes);
 
 // Registration form routes
-router.use('/register', registrationRoutes);
+router.use('/register', registrationValidation, registrationRoutes);
 // Login form routes
-router.use('/login', loginRoutes);
+router.use('/login', loginValidation, loginRoutes);
 
 // Logout route
 router.get('/logout', processLogout);
